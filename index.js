@@ -9,6 +9,8 @@ var dictionary = {
     "words": {}
 };
 
+var client;
+
 // Initializes the bot
 function startUp() {
 
@@ -16,18 +18,14 @@ function startUp() {
     loadDictionary();
 
     // Create discord client and connect
-    const client = new Discord.Client();
+    client = new Discord.Client();
 
     // Set handlers for client events
     client.on('ready', () => {
       console.log(`Logged in as ${client.user.tag}!`);
     });
 
-    client.on('message', msg => {
-      if (msg.content.includes('sweep') && msg.author != client.user) {
-        msg.reply(buildReply(msg.content));
-      }
-    });
+    client.on('message', handleMessage);
 
 
     // Log in to discord
@@ -37,15 +35,37 @@ function startUp() {
     } else {
         client.login(config.discordToken);
     }
+
+    setInterval(saveDictionary, config.autosave_seconds*1000)
 }       
 
+// Reply to a message and/or learn its contents
+function handleMessage(msg) {
+    let reply = 0;
+    let body = msg.content
+    for (var t in config.triggers) {
+        if (body.toLowerCase().includes(config.triggers[t].toLowerCase())) reply = 1;
+        body = body.replace(config.triggers[t], "");
+    }
+
+    body = body.trim();
+
+    if (msg.author != client.user && (reply || (Math.random()*100 < config.replyRate))) {
+        response = buildReply(body);
+        if (response && response != "") msg.reply(response);
+    }
+
+    if (config.learning && msg.author != client.user) {
+        learnMessage(msg.content)
+    }
+}
 
 // Load dictionary file from disk and learn lines
 function loadDictionary() {
     try {
-        var lines = fs.readFileSync(config.dictFile, "utf8");
+        var lines = fs.readFileSync(config.dictFile, "utf-8");
     } catch (e) {
-        console.log("Could not read dictionary file", conf.dictFile, ", creating a new one.")
+        console.log("Could not read dictionary file", config.dictFile, ", creating a new one.")
         var lines = "";
     }
 
@@ -57,13 +77,16 @@ function loadDictionary() {
 }
 
 
-// TODO
 // Save dictionary lines to file
 function saveDictionary() {
     try {
-        fs.writeFile(conf.dictFile, )
+        var lines = [];
+        for (var l in dictionary.lines) {
+            lines.push(l);
+        }
+        fs.writeFileSync(config.dictFile, lines.join("\n"));
     } catch (e) {
-        console.log("Could not open dictionary file", conf.dictFile, ", can't save lines.")
+        console.log("Could not open dictionary file", config.dictFile, ", can't save lines.")
     }
 }
 
@@ -82,7 +105,7 @@ function filterMessage(message) {
 function learnMessage(message) {
     message = filterMessage(message);
 
-    message = message.split(".\n")
+    message = message.split(/[\.|\n]/)
 
     for (let m in message) {
         learnLine(message[m]);
@@ -116,7 +139,7 @@ function buildReply(message) {
     let words = message.replace("?", "").split(" ")
     let known = []
 
-    if (words.length == 0) return;
+    if (words.length == 0) return "";
 
     // Check for words we know
     for (let w in words) {
@@ -125,10 +148,10 @@ function buildReply(message) {
         }
     }
 
+    if (known.length == 0) return;
 
     // And select one known word at random to start building a reply
     var reply = [known[Math.floor(Math.random()*known.length)]]
-    console.log(reply)
 
     // Start building
 
@@ -180,9 +203,6 @@ function buildReply(message) {
     }
 
     return reply.join(" ");
-
-
-
 }
 
 startUp();

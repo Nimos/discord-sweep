@@ -1,7 +1,7 @@
 {
   "name": "discord-sweep",
   "version": "0.5.0",
-  "description": "Markov Chain Chat Bot for Discord, based on SeeBorg https://github.com/hmage/seeborg",
+  "description": "Chat Bot for Discord, based on SeeBorg https://github.com/hmage/seeborg",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,8 +12,8 @@
   },
   "keywords": [
     "discord",
-    "markov",
-    "chatbot"
+    "chatbot",
+    "seeborg"
   ],
   "author": "Nimos",
   "license": "AGPL-3.0-or-later",
