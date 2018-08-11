@@ -1,6 +1,7 @@
 # Discord Sweep
 
-Sweep is a discord port in javascript of the popular IRC Bot SeeBorg found at https://github.com/hmage/seeborg 
+Sweep is a discord port in javascript of the popular IRC Bot SeeBorg found at https://github.com/hmage/seeborg  
+It gets its name from a bot running that software in one of the channels I used to be in.
 
 This project aims to closely mimic the learning and answering mechanisms of the original bot and to preserve its quirks.  
 Full feature parity is not an intended goal and as such you won't find certain features such as configuration by chat commands.
