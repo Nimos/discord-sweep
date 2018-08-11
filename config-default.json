@@ -2,7 +2,7 @@
     "discordToken": "",
     "dictFile": "lines.txt",
     "triggers": ["sweep"],
-    "learning": false,
+    "learning": true,
     "replyRate": 0,
     "max_context_depth": 15,
     "min_context_depth": 5,
