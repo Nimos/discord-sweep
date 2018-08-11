@@ -16,7 +16,7 @@
     "seeborg"
   ],
   "author": "Nimos",
-  "license": "AGPL-3.0-or-later",
+  "license": "GPL-3.0-or-later",
   "bugs": {
     "url": "https://github.com/nimos/discord-sweep/issues"
   },
