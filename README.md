@@ -10,7 +10,6 @@ Full feature parity is not an intended goal and as such you won't find certain f
 git clone https://github.com/nimos/discord-sweep
 cd discord-sweep
 npm install
-cp config-default.json config.json
 # Edit the contents of config.json
 node sweep.js
 ```
