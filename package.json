@@ -1,0 +1,27 @@
+{
+  "name": "discord-sweep",
+  "version": "0.5.0",
+  "description": "Markov Chain Chat Bot for Discord, based on SeeBorg https://github.com/hmage/seeborg",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nimos/discord-sweep.git"
+  },
+  "keywords": [
+    "discord",
+    "markov",
+    "chatbot"
+  ],
+  "author": "Nimos",
+  "license": "AGPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/nimos/discord-sweep/issues"
+  },
+  "homepage": "https://github.com/nimos/discord-sweep#readme",
+  "dependencies": {
+    "discord.js": "^11.4.0"
+  }
+}
