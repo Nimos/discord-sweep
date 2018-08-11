@@ -135,6 +135,8 @@ function learnLine(line) {
     }
 }
 
+
+// Build a reply for a given message, according to SeeBorg's method
 function buildReply(message) {
     let words = message.replace("?", "").split(" ")
     let known = []
