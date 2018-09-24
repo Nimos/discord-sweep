@@ -26,6 +26,7 @@ function startUp() {
     });
 
     client.on('message', handleMessage);
+    client.on('error', console.error);
 
 
     // Log in to discord
@@ -41,21 +42,29 @@ function startUp() {
 
 // Reply to a message and/or learn its contents
 function handleMessage(msg) {
-    let reply = 0;
+    let hasTrigger = 0;
     let body = msg.content
+
+    // Search for trigger words
     for (var t in config.triggers) {
-        if (body.toLowerCase().includes(config.triggers[t].toLowerCase())) reply = 1;
-        body = body.replace(config.triggers[t], "");
+        if (body.toLowerCase().includes(config.triggers[t].toLowerCase())) hasTrigger = 1;
     }
 
     body = body.trim();
 
-    if (msg.author != client.user && (reply || (Math.random()*100 < config.replyRate))) {
+    // Check if we want to reply
+    if (msg.author != client.user && (hasTrigger || (Math.random()*100 < config.replyRate))) {
         response = buildReply(body);
-        if (response && response != "") msg.reply(response);
+        if (response && response != "") {
+               msg.channel.startTyping();
+               setTimeout(() => {
+                       msg.reply(response);
+                       msg.channel.stopTyping();
+               }, Math.floor(Math.random()*(config.maxReplyDelay-config.minReplyDelay))+config.minReplyDelay)
+       }
     }
 
-    if (config.learning && msg.author != client.user) {
+    if (config.learning && msg.author != client.user && !(hasTrigger && config.ignoreTriggerLearning)) {
         learnMessage(msg.content)
     }
 }
@@ -208,3 +217,24 @@ function buildReply(message) {
 }
 
 startUp();
+
+function convert(file, biblemode) {
+    var lines = fs.readFileSync(file, "utf-8");
+
+    lines = lines.replace("\n", "")
+    lines = lines.replace("\r", "")
+    lines = lines.replace("\"", "");
+    if (biblemode) lines = lines.replace(/[A-z][A-z][A-z] [0-9]*:[0-9]* /g, '');
+    lines = lines.replace(/[^a-zA-ZäöüÄÖÜß\- 0-9.]+/g,' ');
+
+    lines = lines.replace(/  +/g, ' ');
+    console.log(lines.indexOf("\n"));
+
+    fs.writeFileSync("test.txt", lines)
+    learnMessage(lines)
+}
+
+convert('pg7205.txt');
+convert('pg22367.txt');
+convert('harry.txt');
+convert('pg7202.txt');
