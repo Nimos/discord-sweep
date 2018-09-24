@@ -1,6 +1,6 @@
 {
   "name": "discord-sweep",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Chat Bot for Discord, based on SeeBorg https://github.com/hmage/seeborg",
   "main": "sweep.js",
   "scripts": {
