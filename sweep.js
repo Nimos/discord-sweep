@@ -233,8 +233,3 @@ function convert(file, biblemode) {
     fs.writeFileSync("test.txt", lines)
     learnMessage(lines)
 }
-
-convert('pg7205.txt');
-convert('pg22367.txt');
-convert('harry.txt');
-convert('pg7202.txt');
