@@ -6,5 +6,8 @@
     "replyRate": 0,
     "max_context_depth": 15,
     "min_context_depth": 5,
-    "autosave_seconds": 60
+    "autosave_seconds": 60,
+    "minReplyDelay": 500,
+    "maxReplyDelay": 3000,
+    "ignoreTriggerLearning": true
 }
