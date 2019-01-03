@@ -28,5 +28,5 @@ node sweep.js
 |min_context_depth| 5  | How many words to choose from each context at minimum. |
 |autosave_seconds| 60 | How often it writes the learned lines to disk |
 |minReplyDelay| 500 | Minimum time the bot is "typing" before sending a reply |
-|maxReplyDelay| 3000 | Minimum time the bot is "typing" before sending a reply |
+|maxReplyDelay| 3000 | Maximum time the bot is "typing" before sending a reply |
 |ignoreTriggerLearning| true | Don't learn lines that contain any of the trigger words |
